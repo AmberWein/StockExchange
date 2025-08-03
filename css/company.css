@@ -1,0 +1,125 @@
+
+body {
+  font-family: system-ui, sans-serif;
+  background-color: var(--background-color);
+  color: var(--font-color);
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+a.back-button {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.company-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.company-logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 3px solid var(--border-color);
+  background-color: var(--card-bg);
+}
+
+.company-basic-info h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.company-symbol {
+  color: var(--gray-text);
+  font-size: 1rem;
+  margin-top: 5px;
+}
+
+.company-website {
+  display: inline-block;
+  margin-top: 10px;
+  color: var(--primary-color);
+  text-decoration: underline;
+  font-size: 0.95rem;
+}
+
+.stock-info {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.stock-card {
+  background-color: var(--card-bg);
+  padding: 15px 20px;
+  border-radius: 12px;
+  flex: 1 1 150px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.stock-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.stock-change {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.company-description {
+  margin-bottom: 40px;
+}
+
+.company-description h3 {
+  margin-bottom: 10px;
+}
+
+.chart-container {
+  margin-bottom: 40px;
+}
+
+.chart-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  color: var(--gray-text);
+}
+
+.error-message {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #ffe5e5;
+  color: #b30000;
+  border-left: 5px solid #ff4d4d;
+  border-radius: 8px;
+}
+
+.positive {
+  background-color: lightgreen;
+}
+
+.negative {
+  background-color: #ffe5e5;
+}

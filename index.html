@@ -4,10 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stock exchange search</title>
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/search.css" />
   </head>
   <body>
     <div class="container">
       <h1>Stock exchange search</h1>
+
+      <div id="errorContainer" class="error-container"></div>
 
       <div class="search-container">
         <input
@@ -20,12 +24,12 @@
 
       <div class="loading" id="loadingIndicator">
         <div class="spinner"></div>
-        <p>Searching companies...</p>
       </div>
 
       <div class="results-container" id="resultsContainer"></div>
     </div>
+
     <script src="js/config.js"></script>
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>

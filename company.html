@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Company Details - Stock Exchange</title>
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/company.css" />
+  </head>
+  <body>
+    <div class="container">
+      <a href="index.html" class="back-button">← Back to Search</a>
+
+      <div class="loading" id="companyLoading">
+        <div class="spinner"></div>
+        <p>Loading company information...</p>
+      </div>
+
+      <div id="companyContent" style="display: none">
+        <div class="company-header">
+          <img
+            id="companyLogo"
+            src=""
+            alt="Company Logo"
+            class="company-logo"
+            style="display: none"
+          />
+          <div class="company-basic-info">
+            <h1 id="companyName">-</h1>
+            <div id="companySymbol" class="company-symbol">-</div>
+            <a
+              id="companyWebsite"
+              href="#"
+              target="_blank"
+              class="company-website"
+              style="display: none"
+              >Visit Website</a
+            >
+          </div>
+        </div>
+
+        <div class="stock-info">
+          <div class="stock-card">
+            <div class="stock-price" id="stockPrice">-</div>
+            <div>Current Price</div>
+          </div>
+          <div class="stock-card">
+            <div id="stockChange" class="stock-change">-</div>
+            <div>Change (%)</div>
+          </div>
+          <div class="stock-card">
+            <div id="marketCap">-</div>
+            <div>Market Cap</div>
+          </div>
+        </div>
+
+        <div class="company-description">
+          <h3>About the Company</h3>
+          <p id="companyDesc">Loading company description...</p>
+        </div>
+
+        <div class="chart-container">
+          <h3>Stock Price History</h3>
+          <div class="chart-loading" id="chartLoading">
+            <div class="spinner"></div>
+            <p>Loading stock price history...</p>
+          </div>
+          <canvas id="stockChart" style="display: none"></canvas>
+        </div>
+      </div>
+
+      <div id="errorContainer"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/company.js"></script>
+  </body>
+</html>
