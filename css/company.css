@@ -123,3 +123,36 @@ a.back-button {
 .negative {
   background-color: #ffe5e5;
 }
+
+
+.company-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  text-decoration: none;
+  color: inherit;
+  gap: 20px;
+}
+
+.search-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: contain;
+  border: 1px solid #ccc;
+  background-color: white;
+}
+
+.company-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.stock-change {
+  font-weight: bold;
+  font-size: 14px;
+}

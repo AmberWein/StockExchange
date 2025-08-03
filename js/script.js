@@ -1,7 +1,6 @@
 const API_KEY = CONFIG.API_KEY;
 const BASE_URL = CONFIG.BASE_URL;
 
-
 const searchInput = document.getElementById("searchInput");
 const searchButton = document.getElementById("searchButton");
 const loadingIndicator = document.getElementById("loadingIndicator");
@@ -38,28 +37,62 @@ async function searchCompanies(query) {
   }
 }
 
-function displayResults(companies) {
+async function displayResults(companies) {
   if (!companies || companies.length === 0) {
     resultsContainer.innerHTML =
       '<div class="no-results">No companies found, try a different search term.</div>';
     return;
   }
 
-  const resultsHTML = companies
-    .map(
-      (company) => `
-                <a href="company.html?symbol=${encodeURIComponent(
-                  company.symbol
-                )}" class="company-item">
-                    <div class="company-name">${escapeHtml(
-                      company.name || "N/A"
-                    )}</div>
-                    <div class="company-symbol">${escapeHtml(
-                      company.symbol || "N/A"
-                    )}</div>
-                </a>
-            `
-    )
+  // fetch detailed profiles for each company
+  const detailedDataPromises = companies.map((company) =>
+    fetch(`${BASE_URL}/profile/${company.symbol}?apikey=${API_KEY}`)
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => (Array.isArray(data) && data.length > 0 ? data[0] : null))
+      .catch((err) => {
+        console.error(`Failed to fetch profile for ${company.symbol}:`, err);
+        return null;
+      })
+  );
+
+  const detailedCompanies = await Promise.all(detailedDataPromises);
+
+  // filter out null results and create HTML
+  const validCompanies = detailedCompanies.filter(company => company !== null);
+
+  if (validCompanies.length === 0) {
+    resultsContainer.innerHTML =
+      '<div class="no-results">No detailed company information found.</div>';
+    return;
+  }
+
+  const resultsHTML = validCompanies
+    .map((company) => {
+      // handle stock change percentage
+      const changeRaw = company.changesPercentage || company.changes || 0;
+      const changeValue = parseFloat(changeRaw);
+      const changeClass = changeValue >= 0 ? "positive" : "negative";
+      const changeDisplay = isNaN(changeValue) ? "N/A" : 
+        `${changeValue > 0 ? "+" : ""}${changeValue.toFixed(2)}%`;
+
+      // handle company image with fallback
+      const imageUrl = company.image || '';
+      const imageHtml = imageUrl ? 
+        `<img class="company-logo" src="${imageUrl}" alt="${escapeHtml(company.companyName || 'Company')} Logo" 
+         onerror="this.style.display='none'" />` : 
+        `<div class="company-logo-placeholder">${(company.symbol || '?').charAt(0)}</div>`;
+
+      return `
+        <a href="company.html?symbol=${encodeURIComponent(company.symbol)}" class="company-item">
+          ${imageHtml}
+          <div class="company-info">
+            <div class="company-name">${escapeHtml(company.companyName || "N/A")}</div>
+            <div class="company-symbol">${escapeHtml(company.symbol || "N/A")}</div>
+          </div>
+          <div class="stock-change ${changeClass}">${changeDisplay}</div>
+        </a>
+      `;
+    })
     .join("");
 
   resultsContainer.innerHTML = resultsHTML;
