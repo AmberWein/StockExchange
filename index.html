@@ -30,7 +30,8 @@
         const results = new SearchResult(document.getElementById('results'));
         
         form.onSearch((companies) => {
-          results.renderResults(companies);
+          const searchTerm = form.getSearchValue();
+          results.renderResults(companies, searchTerm);
         });
       })();
     </script>

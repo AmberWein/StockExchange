@@ -12,8 +12,9 @@ class SearchResult {
         this.clearResults();
     }
 
-    renderResults(companies) {
+    renderResults(companies, searchTerm) {
         this.companies = companies;
+        this.searchTerm = searchTerm;
         
         if (!companies || companies.length === 0) {
             this.showNoResults();
@@ -37,12 +38,15 @@ class SearchResult {
              onerror="this.style.display='none'" />` : 
             `<div class="company-logo-placeholder">${(company.symbol || '?').charAt(0)}</div>`;
 
+        const highlightedName = this.highlightText(company.companyName || 'N/A', this.searchTerm);
+        const highlightedSymbol = this.highlightText(company.symbol || 'N/A', this.searchTerm);
+
         return `
             <a href="company.html?symbol=${encodeURIComponent(company.symbol)}" class="company-item">
                 ${imageHtml}
                 <div class="company-info">
-                    <div class="company-name">${this.escapeHtml(company.companyName || 'N/A')}</div>
-                    <div class="company-symbol">${this.escapeHtml(company.symbol || 'N/A')}</div>
+                    <div class="company-name">${highlightedName}</div>
+                    <div class="company-symbol">${highlightedSymbol}</div>
                 </div>
                 <div class="stock-change ${changeClass}">${changeDisplay}</div>
             </a>
@@ -52,7 +56,7 @@ class SearchResult {
     showNoResults() {
         this.container.innerHTML = `
             <div class="no-results">
-                No companies found. Try a different search term.
+                No companies found, try a different search term.
             </div>
         `;
     }
@@ -69,7 +73,7 @@ class SearchResult {
         this.container.innerHTML = `
             <div class="loading">
                 <div class="spinner"></div>
-                <p>Searching companies...</p>
+                <p>searching companies...</p>
             </div>
         `;
     }
@@ -84,6 +88,32 @@ class SearchResult {
         return div.innerHTML;
     }
 
+    highlightText(text, searchTerm) {
+        if (!searchTerm || !text) {
+            return this.escapeHtml(text);
+        }
+
+        const escapedText = this.escapeHtml(text);
+        // create regex for case-insensitive search
+        const regex = new RegExp(`(${this.escapeRegex(searchTerm)})`, 'gi');
+        // replace matches with highlighted version
+        return escapedText.replace(regex, '<mark class="search-highlight">$1</mark>');
+    }
+
+    // escapeRegex(text) {
+    //     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&'); // escape special regex characters
+    // }
+
+    // escapeHtml(text) {
+    //     const div = document.createElement('div');
+    //     div.textContent = text;
+    //     return div.innerHTML;
+    // }
+
+    escapeRegex(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    
     getCompanies() {
         return this.companies;
     }
