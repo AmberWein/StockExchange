@@ -1,25 +1,20 @@
+
 <!DOCTYPE html>
 <html lang="en">
-  head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stock exchange search</title>
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
+    <title>Stock Exchange Search</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%23667eea;stop-opacity:1' /><stop offset='100%' style='stop-color:%23764ba2;stop-opacity:1' /></linearGradient></defs><rect width='100' height='100' fill='url(%23grad)' rx='20'/><path d='M20 70 L35 55 L50 60 L65 40 L80 30' stroke='white' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/><circle cx='80' cy='30' r='3' fill='white'/></svg>">
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/search.css" />
     <link rel="stylesheet" href="css/ticker.css" />
   </head>
   <body>
-    <div class="stock-ticker">
-      <div class="ticker-wrapper">
-        <div class="ticker-content" id="tickerContent">
-          <div class="ticker-item">Loading stock data...</div>
-        </div>
-      </div>
-    </div>
+    <div id="stockTickerContainer"></div>
 
     <div class="container">
-      <h1>Stock exchange search</h1>
+      <h1>Stock Exchange Search</h1>
 
       <div id="errorContainer" class="error-container"></div>
 
@@ -27,20 +22,27 @@
         <input
           type="text"
           id="searchInput"
-          placeholder="Search for companies..."
+          placeholder="Search for companies (e.g., Apple, Microsoft, Tesla)..."
         />
         <button id="searchButton">Search</button>
       </div>
 
       <div class="loading" id="loadingIndicator">
         <div class="spinner"></div>
+        <p>Searching companies...</p>
       </div>
 
       <div class="results-container" id="resultsContainer"></div>
     </div>
 
     <script src="js/config.js"></script>
-    <script src="js/ticker.js"></script>
+    <script src="js/Marquee.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const tickerContainer = document.getElementById('stockTickerContainer');
+        const stockMarquee = new Marquee(tickerContainer);
+      });
+    </script>
     <script src="js/script.js"></script>
   </body>
 </html>
