@@ -10,7 +10,9 @@ class Marquee {
 
     init() {
         this.createMarqueeStructure();
-        
+    }
+
+    load() {
         this.loadStockData();
         this.setupAutoRefresh();
     }

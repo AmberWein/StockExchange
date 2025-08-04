@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,38 +10,29 @@
     <link rel="stylesheet" href="css/ticker.css" />
   </head>
   <body>
-    <div id="stockTickerContainer"></div>
-
+    <div id="marquee"></div>
     <div class="container">
       <h1>Stock Exchange Search</h1>
-
-      <div id="errorContainer" class="error-container"></div>
-
-      <div class="search-container">
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Search for companies (e.g., Apple, Microsoft, Tesla)..."
-        />
-        <button id="searchButton">Search</button>
-      </div>
-
-      <div class="loading" id="loadingIndicator">
-        <div class="spinner"></div>
-        <p>Searching companies...</p>
-      </div>
-
-      <div class="results-container" id="resultsContainer"></div>
+      <div id="form"></div>
+      <div id="results"></div>
     </div>
-
+    
     <script src="js/config.js"></script>
     <script src="js/Marquee.js"></script>
+    <script src="js/SearchResult.js"></script>
+    <script src="js/SearchForm.js"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const tickerContainer = document.getElementById('stockTickerContainer');
-        const stockMarquee = new Marquee(tickerContainer);
-      });
+      (async function () {
+        const marquee = new Marquee(document.getElementById('marquee'));
+        marquee.load();
+        
+        const form = new SearchForm(document.getElementById('form'));
+        const results = new SearchResult(document.getElementById('results'));
+        
+        form.onSearch((companies) => {
+          results.renderResults(companies);
+        });
+      })();
     </script>
-    <script src="js/script.js"></script>
   </body>
 </html>
