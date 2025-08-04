@@ -26,14 +26,14 @@ async function fetchCompanyProfile(symbol) {
     const response = await fetch(endpoint);
 
     if (!response.ok) {
-      const errorMsg = `כailed to fetch company profile, status: ${response.status}`;
+      const errorMsg = `failed to fetch company profile, status: ${response.status}`;
       console.error(errorMsg);
       showError(errorMsg); 
       return null;
     }
 
     const data = await response.json();
-    console.log("endpoint returned data:", data); // debug log
+    // console.log("endpoint returned data:", data); // debug log
 
     if (
       data &&
@@ -63,7 +63,7 @@ async function fetchStockHistory(symbol) {
     }
 
     const data = await response.json();
-    console.log("Stock history data:", data); // debug log
+    // console.log("Stock history data:", data); // debug log
     return data.historical || [];
   } catch (error) {
     console.error("Error fetching stock history:", error);
@@ -72,8 +72,8 @@ async function fetchStockHistory(symbol) {
 }
 
 function displayCompanyInfo(company) {
-  console.log("Full company object:", company); // debug log
-  console.log("Available keys:", Object.keys(company || {})); // debug log
+  // console.log("Full company object:", company); // debug log
+  // console.log("Available keys:", Object.keys(company || {})); // debug log
 
   document.getElementById("companyName").textContent = company.companyName;
   document.getElementById("companySymbol").textContent = company.symbol;

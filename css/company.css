@@ -1,4 +1,3 @@
-
 body {
   font-family: system-ui, sans-serif;
   background-color: var(--background-color);
@@ -123,7 +122,6 @@ a.back-button {
 .negative {
   background-color: #ffe5e5;
 }
-
 
 .company-item {
   display: flex;

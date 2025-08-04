@@ -58,8 +58,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .company-item {
@@ -168,27 +172,26 @@
   font-weight: 500;
 }
 
-
 @media (max-width: 768px) {
   .search-container {
     flex-direction: column;
   }
-  
+
   .company-item {
     padding: 12px;
   }
-  
+
   .company-logo,
   .company-logo-placeholder {
     width: 40px;
     height: 40px;
     margin-right: 12px;
   }
-  
+
   .company-name {
     font-size: 1rem;
   }
-  
+
   .stock-change {
     font-size: 0.9rem;
     min-width: 70px;
