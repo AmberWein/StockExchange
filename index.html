@@ -33,6 +33,10 @@
           const searchTerm = form.getSearchValue();
           results.renderResults(companies, searchTerm);
         });
+        
+        results.onCompare((company) => {
+          console.log('Company object clicked:', company);
+        });
       })();
     </script>
   </body>

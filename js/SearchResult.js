@@ -2,6 +2,7 @@ class SearchResult {
     constructor(element) {
         this.container = element;
         this.companies = [];
+        this.onCompareClick = null;
         
         this.init();
     }
@@ -23,6 +24,8 @@ class SearchResult {
 
         const resultsHTML = companies.map(company => this.createCompanyItem(company)).join('');
         this.container.innerHTML = resultsHTML;
+        
+        this.bindCompareButtons();
     }
 
     createCompanyItem(company) {
@@ -42,15 +45,42 @@ class SearchResult {
         const highlightedSymbol = this.highlightText(company.symbol || 'N/A', this.searchTerm);
 
         return `
-            <a href="company.html?symbol=${encodeURIComponent(company.symbol)}" class="company-item">
-                ${imageHtml}
-                <div class="company-info">
-                    <div class="company-name">${highlightedName}</div>
-                    <div class="company-symbol">${highlightedSymbol}</div>
-                </div>
-                <div class="stock-change ${changeClass}">${changeDisplay}</div>
-            </a>
+            <div class="company-item-wrapper">
+                <a href="company.html?symbol=${encodeURIComponent(company.symbol)}" class="company-item">
+                    ${imageHtml}
+                    <div class="company-info">
+                        <div class="company-name">${highlightedName}</div>
+                        <div class="company-symbol">${highlightedSymbol}</div>
+                    </div>
+                    <div class="stock-change ${changeClass}">${changeDisplay}</div>
+                </a>
+                <button class="compare-btn" data-symbol="${this.escapeHtml(company.symbol)}">
+                    Compare
+                </button>
+            </div>
         `;
+    }
+
+    bindCompareButtons() {
+        const compareButtons = this.container.querySelectorAll('.compare-btn');
+        
+        compareButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation(); 
+                
+                const symbol = button.getAttribute('data-symbol');
+                const company = this.companies.find(c => c.symbol === symbol);
+                
+                if (company && this.onCompareClick) {
+                    this.onCompareClick(company);
+                }
+            });
+        });
+    }
+
+    onCompare(callback) {
+        this.onCompareClick = callback;
     }
 
     showNoResults() {
@@ -99,16 +129,6 @@ class SearchResult {
         // replace matches with highlighted version
         return escapedText.replace(regex, '<mark class="search-highlight">$1</mark>');
     }
-
-    // escapeRegex(text) {
-    //     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&'); // escape special regex characters
-    // }
-
-    // escapeHtml(text) {
-    //     const div = document.createElement('div');
-    //     div.textContent = text;
-    //     return div.innerHTML;
-    // }
 
     escapeRegex(string) {
         return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
